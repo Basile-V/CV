@@ -144,7 +144,11 @@ export const en: Locale = {
       "Advanced architectures: subagents and background agents",
     ],
   },
-  contactLinks: [{ label: "vandervalle.basile@gmail.com", href: "mailto:vandervalle.basile@gmail.com" }],
+  contactLinks: [
+    { label: "vandervalle.basile@gmail.com", href: "mailto:vandervalle.basile@gmail.com" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/basile-vandervalle/", external: true },
+    { label: "GitHub", href: "https://github.com/Basile-V", external: true },
+  ],
   ui: {
     nav: {
       about: "About",

@@ -15,8 +15,15 @@ const { contactLinks, ui } = locale;
     <h2>{ui.contact.heading}</h2>
     <p class="text-muted contact-text">{ui.contact.text}</p>
     <div class="contact-links">
-      {contactLinks.map((link) => (
-        <a class="button" href={link.href}>{link.label}</a>
+      {contactLinks.map((link, index) => (
+        <a
+          class={index === 0 ? "button" : "button button-ghost"}
+          href={link.href}
+          target={link.external ? "_blank" : undefined}
+          rel={link.external ? "noopener noreferrer" : undefined}
+        >
+          {link.label}
+        </a>
       ))}
     </div>
   </div>

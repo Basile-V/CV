@@ -47,6 +47,7 @@ export interface Certification {
 export interface ContactLink {
   label: string;
   href: string;
+  external?: boolean;
 }
 
 export interface UiStrings {

@@ -144,7 +144,11 @@ export const fr: Locale = {
       "Architectures avancées : subagents et agents en tâche de fond",
     ],
   },
-  contactLinks: [{ label: "vandervalle.basile@gmail.com", href: "mailto:vandervalle.basile@gmail.com" }],
+  contactLinks: [
+    { label: "vandervalle.basile@gmail.com", href: "mailto:vandervalle.basile@gmail.com" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/basile-vandervalle/", external: true },
+    { label: "GitHub", href: "https://github.com/Basile-V", external: true },
+  ],
   ui: {
     nav: {
       about: "À propos",
