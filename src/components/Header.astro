@@ -1,0 +1,108 @@
+---
+import type { Locale } from "../data/types";
+
+interface Props {
+  locale: Locale;
+  altHref: string;
+}
+
+const { locale, altHref } = Astro.props;
+const { profile, ui } = locale;
+
+const links = [
+  { href: "#about", label: ui.nav.about },
+  { href: "#experience", label: ui.nav.experience },
+  { href: "#skills", label: ui.nav.skills },
+  { href: "#projects", label: ui.nav.projects },
+  { href: "#contact", label: ui.nav.contact },
+];
+---
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="#top" class="header-name">{profile.name}</a>
+    <div class="header-right">
+      <nav class="header-nav">
+        {links.map((link) => (
+          <a href={link.href}>{link.label}</a>
+        ))}
+      </nav>
+      <a href={altHref} class="lang-switch" aria-label={ui.langSwitch.ariaLabel}>
+        {ui.langSwitch.label}
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 1rem;
+  }
+
+  .header-name {
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 1.75rem;
+  }
+
+  .header-nav a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color 0.2s ease;
+  }
+
+  .header-nav a:hover {
+    color: var(--color-accent-strong);
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--color-accent-strong);
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .lang-switch:hover {
+    background: var(--color-accent-soft);
+    border-color: var(--color-accent);
+  }
+
+  @media (max-width: 640px) {
+    .header-nav {
+      display: none;
+    }
+  }
+</style>

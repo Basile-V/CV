@@ -1,0 +1,54 @@
+---
+import type { Locale } from "../data/types";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { skills, ui } = locale;
+---
+
+<section id="skills">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{ui.skills.eyebrow}</span>
+    <h2 data-reveal>{ui.skills.heading}</h2>
+
+    <div class="skills-grid" data-reveal-group>
+      {skills.map((category) => (
+        <div class="card skill-category" data-reveal-item>
+          <h3>{category.label}</h3>
+          <div class="skill-tags">
+            {category.items.map((item) => (
+              <span class="pill">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .skill-category {
+    padding: 1.5rem;
+  }
+
+  .skill-category h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--color-accent-strong);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+</style>

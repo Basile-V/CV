@@ -1,0 +1,41 @@
+---
+import type { Locale } from "../data/types";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { profile, contactLinks } = locale;
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p class="text-muted">© {year} {profile.name}</p>
+    <a href={contactLinks[0].href} class="text-muted">{contactLinks[0].label}</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .footer-inner {
+    padding-block: 2rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .footer-inner a {
+    text-decoration: none;
+  }
+
+  .footer-inner a:hover {
+    color: var(--color-accent-strong);
+  }
+</style>

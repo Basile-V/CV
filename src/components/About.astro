@@ -1,0 +1,99 @@
+---
+import type { Locale } from "../data/types";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { profile, education, certification, ui } = locale;
+---
+
+<section id="about">
+  <div class="container about-grid">
+    <div data-reveal>
+      <span class="eyebrow">{ui.about.eyebrow}</span>
+      <h2>{ui.about.heading}</h2>
+      {profile.about.map((paragraph) => (
+        <p class="text-muted about-paragraph">{paragraph}</p>
+      ))}
+    </div>
+
+    <div class="about-cards" data-reveal>
+      <div class="card about-card">
+        <span class="eyebrow">{ui.about.formationLabel}</span>
+        <p><strong>{education.degree}</strong></p>
+        <p class="text-muted">{education.school} — {education.year}</p>
+      </div>
+
+      <div class="card about-card">
+        <span class="eyebrow">{ui.about.languagesLabel}</span>
+        {profile.languages.map((lang) => (
+          <p><strong>{lang.name}</strong> <span class="text-muted">— {lang.level}</span></p>
+        ))}
+      </div>
+
+      <div class="card about-card">
+        <span class="eyebrow">{ui.about.certificationLabel}</span>
+        <p><strong>{certification.title}</strong></p>
+        {certification.subtitle && <p class="text-muted certification-subtitle">{certification.subtitle}</p>}
+        <ul>
+          {certification.items.map((item) => (
+            <li class="text-muted">{item}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-paragraph {
+    margin-bottom: 1rem;
+  }
+
+  .about-paragraph:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .about-cards {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .about-card {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .about-card p {
+    margin-block: 0.15rem;
+  }
+
+  .certification-subtitle {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .about-card ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.1rem;
+  }
+
+  .about-card li {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  @media (max-width: 800px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
