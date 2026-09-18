@@ -156,6 +156,7 @@ export const fr: Locale = {
       skills: "Compétences",
       projects: "Projets",
       contact: "Contact",
+      menuLabel: "Menu",
     },
     hero: {
       greeting: "Bonjour, je suis",

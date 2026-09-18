@@ -156,6 +156,7 @@ export const en: Locale = {
       skills: "Skills",
       projects: "Projects",
       contact: "Contact",
+      menuLabel: "Menu",
     },
     hero: {
       greeting: "Hi, I'm",

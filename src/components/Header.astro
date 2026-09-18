@@ -30,9 +30,57 @@ const links = [
       <a href={altHref} class="lang-switch" aria-label={ui.langSwitch.ariaLabel}>
         {ui.langSwitch.label}
       </a>
+      <button
+        type="button"
+        class="menu-toggle"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label={ui.nav.menuLabel}
+      >
+        <span class="menu-toggle-bar"></span>
+        <span class="menu-toggle-bar"></span>
+        <span class="menu-toggle-bar"></span>
+      </button>
     </div>
   </div>
+
+  <nav id="mobile-nav" class="mobile-nav" data-mobile-nav hidden>
+    {links.map((link) => (
+      <a href={link.href} data-mobile-nav-link>{link.label}</a>
+    ))}
+  </nav>
 </header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const panel = document.querySelector<HTMLElement>("[data-mobile-nav]");
+
+  if (toggle && panel) {
+    const close = () => {
+      panel.classList.remove("is-open");
+      panel.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.classList.remove("is-open");
+    };
+
+    const open = () => {
+      panel.hidden = false;
+      panel.classList.add("is-open");
+      toggle.setAttribute("aria-expanded", "true");
+      toggle.classList.add("is-open");
+    };
+
+    toggle.addEventListener("click", () => {
+      if (panel.classList.contains("is-open")) close();
+      else open();
+    });
+
+    panel.querySelectorAll<HTMLElement>("[data-mobile-nav-link]").forEach((link) => {
+      link.addEventListener("click", close);
+    });
+  }
+</script>
 
 <style>
   .header {
@@ -100,9 +148,73 @@ const links = [
     border-color: var(--color-accent);
   }
 
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    cursor: pointer;
+  }
+
+  .menu-toggle-bar {
+    width: 16px;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-text);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .menu-toggle.is-open .menu-toggle-bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .menu-toggle.is-open .menu-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.is-open .menu-toggle-bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+
+  .mobile-nav a {
+    padding: 0.9rem 1.5rem;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .mobile-nav a:active {
+    background: var(--color-accent-soft);
+    color: var(--color-accent-strong);
+  }
+
   @media (max-width: 640px) {
     .header-nav {
       display: none;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+
+    .mobile-nav.is-open {
+      display: flex;
     }
   }
 </style>

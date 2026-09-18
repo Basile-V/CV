@@ -57,6 +57,7 @@ export interface UiStrings {
     skills: string;
     projects: string;
     contact: string;
+    menuLabel: string;
   };
   hero: {
     greeting: string;
