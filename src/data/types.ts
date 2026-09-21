@@ -27,8 +27,11 @@ export interface Project {
   id: string;
   title: string;
   company: string;
-  pitch: string;
-  highlight: string;
+  challenge: string;
+  context: string;
+  actions: string[];
+  results: string[];
+  learnings: string;
   stack: string[];
 }
 
@@ -83,6 +86,11 @@ export interface UiStrings {
   projects: {
     eyebrow: string;
     heading: string;
+    challengeLabel: string;
+    contextLabel: string;
+    actionsLabel: string;
+    resultsLabel: string;
+    learningsLabel: string;
   };
   contact: {
     eyebrow: string;

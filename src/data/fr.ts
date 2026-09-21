@@ -17,11 +17,11 @@ export const fr: Locale = {
     languages: [{ name: "Anglais", level: "Courant" }],
   },
   skills: [
-    { label: "Back-end", items: ["Java 25", "Spring Boot", "Quarkus"] },
+    { label: "Back-end", items: ["Java 25", "Kotlin", "Spring Boot", "Quarkus"] },
     { label: "Front-end", items: ["Angular", "HTML", "CSS", "JavaScript"] },
     { label: "Messaging", items: ["Kafka", "Kafka Streams", "Kafka Connect", "Avro"] },
     { label: "Bases de données", items: ["PostgreSQL", "MySQL", "Redis"] },
-    { label: "DevOps", items: ["Docker", "Kubernetes", "GCP", "AWS"] },
+    { label: "DevOps", items: ["Docker", "Kubernetes", "GCP", "AWS", "Datadog"] },
     { label: "CI/CD", items: ["GitHub Actions", "Jenkins", "Git", "GitLab CI"] },
     { label: "Craft", items: ["TDD", "BDD", "Clean Code", "SOLID", "DDD"] },
   ],
@@ -105,28 +105,74 @@ export const fr: Locale = {
   ],
   projects: [
     {
-      id: "blofi",
-      title: "Blofi",
-      company: "Crédit Agricole CIB",
-      pitch: "Application de trading permettant de créer et gérer des deals pour les traders.",
-      highlight: "Microservice Kafka créé from scratch : producer, scheduler, sécurité et IHM de tableaux dynamiques.",
-      stack: ["Java 21", "Quarkus", "Kafka", "Vault"],
+      id: "onepay",
+      title: "OnePay V2",
+      company: "Decathlon Canada",
+      challenge:
+        "Refondre un moyen de paiement critique dont la V1 n'était pas documentée, sans jamais casser les remboursements en cours.",
+      context:
+        "OnePay est le moyen de paiement de decathlon.ca : un projet critique, où toute erreur impacte directement les ventes. La V1, héritée, n'avait quasiment aucune documentation, et les remboursements restent possibles pendant un an après l'achat.",
+      actions: [
+        "Rétro-ingénierie complète de la V1 pour comprendre son fonctionnement réel",
+        "Rédaction d'un wiki de référence servant de base à la V2",
+        "Préservation de la V1 en parallèle de la V2 pendant toute la fenêtre de remboursement d'un an",
+        "Mise en place d'un webhook pour mettre à jour le statut de la commande dès réception du statut du paiement",
+        "Coordination avec l'équipe front pour intégrer le nouveau widget de paiement et les nouveaux paths",
+        "Coordination avec les DevOps pour le whitelisting des nouveaux paths utilisés",
+      ],
+      results: [
+        "Documentation de référence créée là où il n'en existait pas",
+        "V1 et V2 cohabitent pour continuer à honorer les remboursements sur un an",
+      ],
+      learnings:
+        "Sur un système critique sans documentation, le vrai travail commence avant le code : comprendre et documenter avant de faire évoluer.",
+      stack: ["Java 21", "Spring Boot 3", "GCP"],
     },
     {
       id: "galaxy",
-      title: "Programme Galaxy",
+      title: "Galaxy — préparer la mise en production",
       company: "BForBank",
-      pitch: "Refonte du Core Banking en architecture hexagonale sur une plateforme événementielle Kafka/GCP.",
-      highlight: "7 microservices, schémas Avro versionnés, notifications multicanales et flux de paiement critiques.",
-      stack: ["Java 25", "Spring Boot 3", "Kafka", "GCP"],
+      challenge:
+        "Garantir que l'infrastructure tienne la bascule de 3 millions de clients déjà existants, sans risque de latence.",
+      context:
+        "Dans la refonte du Core Banking de BForBank (programme Galaxy, architecture hexagonale), la mise en production devait migrer une base de 3 millions de clients existants. J'ai rejoint le programme pour sécuriser les jalons de livraison et la qualité technique des livrables.",
+      actions: [
+        "Création d'un pool de comptes clients pour simuler la volumétrie réelle",
+        "Tests de charge en local puis en environnement de dev, pour vérifier la tenue de l'infrastructure et l'absence de risque de latence",
+        "Création d'un job Kubernetes exécutant les migrations Liquibase avant le lancement de chaque microservice",
+        "Ajout de métriques Datadog pour suivre le comportement des services",
+        "Prise en main de Kafka Streams, Connect et des patterns outbox / tombstone",
+      ],
+      results: [
+        "Tenue en charge vérifiée avant la mise en production, en local puis en dev",
+        "Migrations de base exécutées automatiquement avant chaque démarrage de service",
+        "Métriques Datadog disponibles pour suivre les services",
+      ],
+      learnings:
+        "Sécuriser une mise en production à fort enjeu, c'est surtout anticiper : reproduire la volumétrie réelle et automatiser tout ce qui peut l'être avant le jour J.",
+      stack: ["Java 25", "Spring Boot 3", "Kafka", "Kubernetes", "Liquibase", "Datadog", "GCP"],
     },
     {
-      id: "decathlon-ca",
-      title: "decathlon.ca",
+      id: "gateway",
+      title: "Gateway (Geolook)",
       company: "Decathlon Canada",
-      pitch: "Fonctionnalités e-commerce, paiement et logistique pour le site canadien de Decathlon.",
-      highlight: "Refonte de l'estimation de livraison et intégration Kafka pour le stock produit en temps réel.",
-      stack: ["Java 21", "Spring Boot 3", "Kafka"],
+      challenge:
+        "Décharger nos microservices des comportements déjà disponibles sur les API de Decathlon United, tout en gardant un temps de réponse minimal.",
+      context:
+        "Dans la plateforme e-commerce de Decathlon Canada, plusieurs de nos microservices reproduisaient des comportements déjà exposés par les API de Decathlon United (le niveau mondial). Gateway, aussi appelé Geolook, est le microservice qui s'interpose pour les fournir à leur place, avec un cache pour minimiser le temps de réponse.",
+      actions: [
+        "Création du microservice Gateway (Geolook) avec Spring Cloud Gateway, pour exposer les comportements des API de Decathlon United",
+        "Mise en place d'un cache pour minimiser le temps de réponse, avec Redis pour partager le cache entre les différentes instances du service",
+        "Création de filtres au sein du Gateway",
+        "Mises en production",
+      ],
+      results: [
+        "Décommissionnement de certaines fonctionnalités de nos microservices, désormais fournies par Gateway",
+        "Temps de réponse minimisé grâce au cache",
+      ],
+      learnings:
+        "Mettre un cache devant des API distantes évite de dupliquer leur logique dans chaque service, tout en accélérant les réponses.",
+      stack: ["Java 21", "Spring Cloud Gateway", "Redis", "GCP"],
     },
   ],
   education: {
@@ -180,8 +226,13 @@ export const fr: Locale = {
       currentTag: "En cours",
     },
     projects: {
-      eyebrow: "Missions phares",
-      heading: "Ce que j'ai construit récemment",
+      eyebrow: "Défis relevés",
+      heading: "Missions marquantes",
+      challengeLabel: "Le défi",
+      contextLabel: "Contexte",
+      actionsLabel: "Ce que j'ai mis en place",
+      resultsLabel: "Résultats",
+      learningsLabel: "Ce que j'en retiens",
     },
     contact: {
       eyebrow: "Contact",

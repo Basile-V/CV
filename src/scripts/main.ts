@@ -88,10 +88,10 @@ if (timelineLine && timelineSection) {
   });
 }
 
-// Experience cards: click to expand/collapse full mission details
-document.querySelectorAll<HTMLElement>("[data-experience-toggle]").forEach((toggle) => {
-  const card = toggle.closest<HTMLElement>("[data-experience-card]");
-  const details = card?.querySelector<HTMLElement>("[data-experience-details]");
+// Expandable cards (experience timeline, project case studies): click to reveal full details
+document.querySelectorAll<HTMLElement>("[data-expand-toggle]").forEach((toggle) => {
+  const card = toggle.closest<HTMLElement>("[data-expand-card]");
+  const details = card?.querySelector<HTMLElement>("[data-expand-details]");
   if (!card || !details) return;
 
   gsap.set(details, { height: 0, opacity: 0, overflow: "hidden" });

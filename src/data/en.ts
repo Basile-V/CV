@@ -17,11 +17,11 @@ export const en: Locale = {
     languages: [{ name: "English", level: "Fluent" }],
   },
   skills: [
-    { label: "Back-end", items: ["Java 25", "Spring Boot", "Quarkus"] },
+    { label: "Back-end", items: ["Java 25", "Kotlin", "Spring Boot", "Quarkus"] },
     { label: "Front-end", items: ["Angular", "HTML", "CSS", "JavaScript"] },
     { label: "Messaging", items: ["Kafka", "Kafka Streams", "Kafka Connect", "Avro"] },
     { label: "Databases", items: ["PostgreSQL", "MySQL", "Redis"] },
-    { label: "DevOps", items: ["Docker", "Kubernetes", "GCP", "AWS"] },
+    { label: "DevOps", items: ["Docker", "Kubernetes", "GCP", "AWS", "Datadog"] },
     { label: "CI/CD", items: ["GitHub Actions", "Jenkins", "Git", "GitLab CI"] },
     { label: "Craft", items: ["TDD", "BDD", "Clean Code", "SOLID", "DDD"] },
   ],
@@ -105,28 +105,74 @@ export const en: Locale = {
   ],
   projects: [
     {
-      id: "blofi",
-      title: "Blofi",
-      company: "Crédit Agricole CIB",
-      pitch: "A trading application for creating and managing deals for traders.",
-      highlight: "Kafka microservice built from scratch: producer, scheduler, security and a dynamic-table UI.",
-      stack: ["Java 21", "Quarkus", "Kafka", "Vault"],
+      id: "onepay",
+      title: "OnePay V2",
+      company: "Decathlon Canada",
+      challenge:
+        "Rebuild a critical payment method whose V1 was undocumented, without ever breaking refunds already in progress.",
+      context:
+        "OnePay is decathlon.ca's payment method: a critical project where any mistake directly hits sales. The inherited V1 had almost no documentation, and refunds remain possible for a year after purchase.",
+      actions: [
+        "Fully reverse-engineered V1 to understand how it really worked",
+        "Wrote a reference wiki to serve as the foundation for V2",
+        "Kept V1 running alongside V2 for the whole one-year refund window",
+        "Set up a webhook to update the order status as soon as the payment status is received",
+        "Worked with the front-end team to integrate the new payment widget and the new paths",
+        "Worked with DevOps to whitelist the new paths in use",
+      ],
+      results: [
+        "Reference documentation created where none existed",
+        "V1 and V2 run side by side so refunds can still be honored over the year",
+      ],
+      learnings:
+        "On a critical system with no documentation, the real work starts before the code: understand and document before changing anything.",
+      stack: ["Java 21", "Spring Boot 3", "GCP"],
     },
     {
       id: "galaxy",
-      title: "Galaxy Program",
+      title: "Galaxy — preparing the production rollout",
       company: "BForBank",
-      pitch: "Core Banking rebuild around a hexagonal architecture on an event-driven Kafka/GCP platform.",
-      highlight: "7 microservices, versioned Avro schemas, multichannel notifications and critical payment flows.",
-      stack: ["Java 25", "Spring Boot 3", "Kafka", "GCP"],
+      challenge:
+        "Make sure the infrastructure could withstand the switchover of 3 million existing customers, with no latency risk.",
+      context:
+        "In BForBank's Core Banking rebuild (Galaxy program, hexagonal architecture), the go-live had to migrate a base of 3 million existing customers. I joined the program to secure delivery milestones and the technical quality of deliverables.",
+      actions: [
+        "Built a pool of customer accounts to simulate real-world volumes",
+        "Ran load tests locally then in the dev environment, to check the infrastructure held up with no latency risk",
+        "Created a Kubernetes job running Liquibase migrations before each microservice starts",
+        "Added Datadog metrics to monitor service behavior",
+        "Picked up Kafka Streams, Connect and the outbox / tombstone patterns",
+      ],
+      results: [
+        "Load handling verified before go-live, locally then in dev",
+        "Database migrations run automatically before every service start",
+        "Datadog metrics available to monitor the services",
+      ],
+      learnings:
+        "Securing a high-stakes production rollout is mostly about anticipation: reproduce real volumes and automate everything you can before D-day.",
+      stack: ["Java 25", "Spring Boot 3", "Kafka", "Kubernetes", "Liquibase", "Datadog", "GCP"],
     },
     {
-      id: "decathlon-ca",
-      title: "decathlon.ca",
+      id: "gateway",
+      title: "Gateway (Geolook)",
       company: "Decathlon Canada",
-      pitch: "E-commerce, payment and logistics features for Decathlon's Canadian website.",
-      highlight: "Reworked delivery estimation and integrated Kafka for real-time product stock.",
-      stack: ["Java 21", "Spring Boot 3", "Kafka"],
+      challenge:
+        "Offload our microservices from behaviors already available in Decathlon United's APIs, while keeping response times minimal.",
+      context:
+        "In Decathlon Canada's e-commerce platform, several of our microservices reproduced behaviors already exposed by Decathlon United's (the worldwide level) APIs. Gateway, also called Geolook, is the microservice that steps in to provide them instead, with a cache to minimize response time.",
+      actions: [
+        "Built the Gateway (Geolook) microservice with Spring Cloud Gateway, to expose the behaviors of Decathlon United's APIs",
+        "Set up a cache to minimize response time, using Redis so the cache is shared across the service's multiple instances",
+        "Built filters within the Gateway",
+        "Handled production releases",
+      ],
+      results: [
+        "Decommissioned some of our microservices' features, now provided by Gateway",
+        "Response time minimized thanks to the cache",
+      ],
+      learnings:
+        "Putting a cache in front of remote APIs avoids duplicating their logic in every service, while speeding up responses.",
+      stack: ["Java 21", "Spring Cloud Gateway", "Redis", "GCP"],
     },
   ],
   education: {
@@ -180,8 +226,13 @@ export const en: Locale = {
       currentTag: "Current",
     },
     projects: {
-      eyebrow: "Featured missions",
-      heading: "What I've recently built",
+      eyebrow: "Challenges tackled",
+      heading: "Standout missions",
+      challengeLabel: "The challenge",
+      contextLabel: "Context",
+      actionsLabel: "What I put in place",
+      resultsLabel: "Results",
+      learningsLabel: "What I took away",
     },
     contact: {
       eyebrow: "Contact",

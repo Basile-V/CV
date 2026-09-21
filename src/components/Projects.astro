@@ -14,17 +14,56 @@ const { projects, ui } = locale;
     <span class="eyebrow" data-reveal>{ui.projects.eyebrow}</span>
     <h2 data-reveal>{ui.projects.heading}</h2>
 
-    <div class="projects-grid" data-reveal-group>
+    <div class="projects-list" data-reveal-group>
       {projects.map((project) => (
-        <article class="card project-card" data-reveal-item>
-          <span class="eyebrow">{project.company}</span>
-          <h3>{project.title}</h3>
-          <p class="text-muted project-pitch">{project.pitch}</p>
-          <p class="project-highlight">{project.highlight}</p>
-          <div class="skill-tags">
-            {project.stack.map((tech) => (
-              <span class="pill">{tech}</span>
-            ))}
+        <article class="card project-card" data-expand-card data-open="false" data-reveal-item>
+          <button class="project-header" data-expand-toggle aria-expanded="false">
+            <div>
+              <span class="eyebrow">{project.company}</span>
+              <h3>{project.title}</h3>
+            </div>
+            <span class="project-icon" aria-hidden="true">+</span>
+          </button>
+
+          <div class="project-challenge">
+            <span class="project-label">{ui.projects.challengeLabel}</span>
+            <p>{project.challenge}</p>
+          </div>
+
+          <div class="project-details" data-expand-details>
+            <div class="project-block">
+              <span class="project-label">{ui.projects.contextLabel}</span>
+              <p class="text-muted">{project.context}</p>
+            </div>
+
+            <div class="project-block">
+              <span class="project-label">{ui.projects.actionsLabel}</span>
+              <ul>
+                {project.actions.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="project-block">
+              <span class="project-label">{ui.projects.resultsLabel}</span>
+              <ul>
+                {project.results.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="project-block">
+              <span class="project-label">{ui.projects.learningsLabel}</span>
+              <p class="text-muted">{project.learnings}</p>
+            </div>
+
+            <div class="skill-tags">
+              {project.stack.map((tech) => (
+                <span class="pill">{tech}</span>
+              ))}
+            </div>
           </div>
         </article>
       ))}
@@ -33,38 +72,108 @@ const { projects, ui } = locale;
 </section>
 
 <style>
-  .projects-grid {
+  .projects-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   .project-card {
-    padding: 1.75rem;
+    padding: 1.5rem 1.75rem;
+  }
+
+  .project-header {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
   }
 
-  .project-card h3 {
+  .project-header h3 {
     font-size: 1.3rem;
+    margin-top: 0.15rem;
   }
 
-  .project-pitch {
-    font-size: 0.95rem;
+  .project-icon {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: var(--color-accent-strong);
+    transition: transform 0.3s ease, background 0.2s ease;
   }
 
-  .project-highlight {
-    font-size: 0.9rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--color-border);
+  [data-open="true"] .project-icon {
+    transform: rotate(45deg);
+    background: var(--color-accent-soft);
+  }
+
+  .project-challenge {
+    margin-top: 1rem;
+    padding: 0.9rem 1.1rem;
+    display: grid;
+    gap: 0.35rem;
+    border-radius: 10px;
+    background: var(--color-accent-soft);
+  }
+
+  .project-challenge p {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--color-text);
+  }
+
+  .project-details {
+    margin-top: 1.25rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .project-block {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .project-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-accent-strong);
+  }
+
+  .project-block p {
+    font-size: 0.92rem;
+  }
+
+  .project-block ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .project-block li {
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
   }
 
   .skill-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: auto;
-    padding-top: 0.5rem;
   }
 </style>
