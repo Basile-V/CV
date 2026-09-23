@@ -96,7 +96,15 @@ document.querySelectorAll<HTMLElement>("[data-expand-toggle]").forEach((toggle) 
 
   gsap.set(details, { height: 0, opacity: 0, overflow: "hidden" });
 
-  toggle.addEventListener("click", () => {
+  // Cards marked data-expand-whole toggle on a click anywhere; the header button
+  // stays for keyboard access, its click simply bubbles up to the card.
+  const clickTarget = card.hasAttribute("data-expand-whole") ? card : toggle;
+
+  clickTarget.addEventListener("click", (event) => {
+    // Let links work and don't collapse the card while the user is selecting text
+    if ((event.target as HTMLElement).closest("a")) return;
+    if (window.getSelection()?.toString()) return;
+
     const isOpen = card.getAttribute("data-open") === "true";
     card.setAttribute("data-open", String(!isOpen));
     toggle.setAttribute("aria-expanded", String(!isOpen));

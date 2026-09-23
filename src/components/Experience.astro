@@ -23,7 +23,7 @@ const { experiences, ui } = locale;
         {experiences.map((exp) => (
           <li class="timeline-entry" data-reveal>
             <span class="timeline-dot" class:list={[{ "timeline-dot-current": exp.current }]}></span>
-            <div class="card experience-card" data-expand-card data-open="false">
+            <div class="card experience-card" data-expand-card data-expand-whole data-open="false">
               <button
                 class="experience-header"
                 data-expand-toggle
@@ -126,6 +126,7 @@ const { experiences, ui } = locale;
 
   .experience-card {
     padding: 1.5rem 1.75rem;
+    cursor: pointer;
   }
 
   .experience-header {
