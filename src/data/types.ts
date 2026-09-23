@@ -23,6 +23,12 @@ export interface Experience {
   stack: string[];
 }
 
+export interface ProjectLink {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -33,6 +39,16 @@ export interface Project {
   results: string[];
   learnings: string;
   stack: string[];
+}
+
+export interface SideProject {
+  id: string;
+  title: string;
+  tagline: string;
+  description: string;
+  note?: string;
+  stack: string[];
+  links: ProjectLink[];
 }
 
 export interface Education {
@@ -92,6 +108,10 @@ export interface UiStrings {
     resultsLabel: string;
     learningsLabel: string;
   };
+  sideProjects: {
+    eyebrow: string;
+    heading: string;
+  };
   contact: {
     eyebrow: string;
     heading: string;
@@ -111,6 +131,7 @@ export interface Locale {
   skills: SkillCategory[];
   experiences: Experience[];
   projects: Project[];
+  sideProjects: SideProject[];
   education: Education;
   certification: Certification;
   contactLinks: ContactLink[];

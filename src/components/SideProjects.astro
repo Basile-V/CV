@@ -1,0 +1,91 @@
+---
+import type { Locale } from "../data/types";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { sideProjects, ui } = locale;
+---
+
+<section id="side-projects">
+  <div class="container">
+    <span class="eyebrow" data-reveal>{ui.sideProjects.eyebrow}</span>
+    <h2 data-reveal>{ui.sideProjects.heading}</h2>
+
+    <div class="side-projects-grid" data-reveal-group>
+      {sideProjects.map((project) => (
+        <article class="card side-project" data-reveal-item>
+          <div>
+            <h3>{project.title}</h3>
+            <span class="eyebrow">{project.tagline}</span>
+          </div>
+
+          <p class="text-muted">{project.description}</p>
+
+          <div class="skill-tags">
+            {project.stack.map((tech) => (
+              <span class="pill">{tech}</span>
+            ))}
+          </div>
+
+          <div class="side-project-links">
+            {project.links.map((link, index) => (
+              <a
+                class={index === 0 ? "button" : "button button-ghost"}
+                href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {project.note && <p class="side-project-note">{project.note}</p>}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .side-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+    gap: 1.25rem;
+  }
+
+  .side-project {
+    padding: 1.5rem 1.75rem;
+    display: grid;
+    gap: 1rem;
+    align-content: start;
+  }
+
+  .side-project h3 {
+    font-size: 1.3rem;
+  }
+
+  .side-project p {
+    font-size: 0.92rem;
+  }
+
+  .skill-tags,
+  .side-project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .side-project-links {
+    gap: 0.75rem;
+  }
+
+  .side-project .side-project-note {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+</style>

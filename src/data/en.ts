@@ -175,6 +175,21 @@ export const en: Locale = {
       stack: ["Java 21", "Spring Cloud Gateway", "Redis", "GCP"],
     },
   ],
+  sideProjects: [
+    {
+      id: "agenda",
+      title: "Agenda",
+      tagline: "Calendar management app",
+      description:
+        "Full-stack app designed, built and deployed solo: Java 25 / Spring Boot backend with hexagonal architecture (TDD), Angular frontend with signals and atomic design, JWT authentication and a PostgreSQL database versioned with Liquibase.",
+      note: "Free hosting: the first load can take about 1 minute while the server wakes up.",
+      stack: ["Java 25", "Spring Boot 3", "Angular", "PostgreSQL", "Cloudflare Workers"],
+      links: [
+        { label: "View project", href: "https://agenda.vandervalle-basile.workers.dev", external: true },
+        { label: "Source code", href: "https://github.com/Basile-V/agenda", external: true },
+      ],
+    },
+  ],
   education: {
     degree: "Engineering degree in Computer Science",
     school: "Polytech Lyon",
@@ -233,6 +248,10 @@ export const en: Locale = {
       actionsLabel: "What I put in place",
       resultsLabel: "Results",
       learningsLabel: "What I took away",
+    },
+    sideProjects: {
+      eyebrow: "Side projects",
+      heading: "What I build on the side",
     },
     contact: {
       eyebrow: "Contact",
